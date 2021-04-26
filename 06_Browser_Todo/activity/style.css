@@ -3,6 +3,8 @@
 }
 body{
     margin:0px;
+    font-family: "Raleway", sans-serif;
+    background-color: #ecf0f1;
 }
 .toolbar{
     height:12vh;
@@ -17,7 +19,7 @@ body{
     width: 14rem;
     background-color: #636e72;
     margin-right: 4rem;
-    border-radius: 0.2rem;
+    border-radius: 0.3rem;
 }
 .filter{
     height: 100%;
@@ -29,7 +31,7 @@ body{
     
 }
 .filter_color{
-    height:40%;
+    height:35%;
     width:40%;
     border-radius: 0.2rem;
 }
@@ -55,6 +57,7 @@ body{
     width: 8rem;
     background-color: #636e72;
     border-radius: 0.2rem;
+    
    }
 .icon-container{
     display:flex;
@@ -65,8 +68,79 @@ body{
 }
 .fas{
     font-size: 2rem;
+    color:white;
 }
+
+.modal_container{
+    position:absolute;
+    height:18rem;
+width:36rem;
+background-color: brown;
+left:3vw;
+top:30vh;
+display: flex;
+box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.698);
+}
+.input_container{
+    height: 100%;
+    width:73%;
+}
+.modal_input{
+    height: 100%;
+    width:100%;
+    outline:none;
+    padding: 2rem 3rem;
+    font-family: "Raleway", sans-serif;
+    font-size: 1.5rem;
+    /*  line between space */
+    line-height: 145%;
+    font-weight: 400;
+
+}
+.modal_filter_container{
+ width:27%;
+ background-color: #444;
+display: flex;
+flex-direction: column;
+justify-content: space-evenly;
+/* gap:2rem; */
+align-items: center;
+padding: 1.7rem 1.2rem;
+}
+.modal_filter_container>.filter{
+   height: 15%; 
+   width:60%; 
+   
+}
+
+.border{
+    border: 3.5px solid white;
+}
+
 .main-container{
-    height: 85vh;
+    height: 88vh;
+    padding-top: 2rem;
+    padding-left: 3rem;
+    display:flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
 }
+.task_container{
+    height:10rem;
+    width:16rem;
+    background-color:  #fff;
+}
+.task_filter{
+    height:7%;
+}
+.task_desc_container{
+    padding-left:0.5rem;
+}
+.task_desc{
+    text-align: center;
+}
+.uid{
+    color: #444;
+}
+
 
