@@ -5,6 +5,16 @@ let plusBtn = document.querySelector(".fa-plus");
 let delBtn = document.querySelector(".fa-times");
 let deleteState = false;
 
+let taskArr = [];
+if (localStorage.getItem("allTask")) {
+    taskArr = JSON.parse(localStorage.getItem("allTask"));
+    for (let i = 0; i < taskArr.length; i++) {
+        let { color, task, id } = taskArr[i];
+        createTask(color, task, false, id);
+
+    }
+}
+
 
 
 plusBtn.addEventListener("click", createModal);
@@ -29,8 +39,8 @@ function createModal() {
         body.appendChild(modal_container);
         handleModal(modal_container);
     }
-    let textarea=document.querySelector(".modal_input");
-    textarea.value="";
+    let textarea = document.querySelector(".modal_input");
+    textarea.value = "";
 
 }
 
@@ -52,25 +62,35 @@ function handleModal(modal_container) {
     textArea.addEventListener("keypress", function (e) {
         if (e.key == "Enter" && textArea.value != "") {
             modal_container.remove();
-            createTask(cColor, textArea.value)
+            createTask(cColor, textArea.value, true);
         }
     })
 
 }
-function createTask(cColor, task) {
+function createTask(cColor, task, flag, id) {
     let taskContainer = document.createElement("div")
-    var uid = new ShortUniqueId();
+    let uidFn = new ShortUniqueId();
+    let uid = id || uidFn();
     taskContainer.setAttribute("class", "task_container");
     taskContainer.innerHTML = `<div class="task_filter ${cColor}"></div>
-    <div class="task_desc_container" contenteditable="true">
-        <h3 class="uid">#${uid()}</h3>
-        <div class="task_desc">${task}</div>
+    <div class="task_desc_container">
+        <h3 class="uid">#${uid}</h3>
+        <div class="task_desc" contenteditable="true">${task}</div>
     </div>
 </div>`;
+
+    if (flag == true) {
+        let obj = { "color": cColor, "id": uid, "task": task };
+        taskArr.push(obj);
+        let finalArr = JSON.stringify(taskArr);
+        localStorage.setItem("allTask", finalArr);
+    }
     mainContainer.appendChild(taskContainer);
     let taskFilter = taskContainer.querySelector(".task_filter");
     taskFilter.addEventListener("click", changeColor);
-    taskContainer.addEventListener("click", deleteTask)
+    taskContainer.addEventListener("click", deleteTask);
+    let taskDesc = taskContainer.querySelector(".task_desc");
+    taskDesc.addEventListener("keypress", editTask);
 
 }
 
@@ -97,10 +117,39 @@ function setDeleteState(e) {
 
 }
 
+function editTask(e) {
+    let taskDesc = e.currentTarget;
+    let uidElem = taskDesc.parentNode.children[0];
+    let uid = uidElem.innerText.split("#")[1];
+    for (let i = 0; i < taskArr.length; i++) {
+        let { id } = taskArr[i];
+        if (id == uid) {
+            taskArr[i].task = taskDesc.innerText;
+            let finalTaskArr = JSON.stringify(taskArr);
+            localStorage.setItem("allTask", finalTaskArr);
+            break;
+        }
+    }
+
+
+}
+
 function deleteTask(e) {
     let taskContainer = e.currentTarget;
     if (deleteState) {
-        taskContainer.remove();
+        let uidElem = taskContainer.querySelector(".uid");
+        let uid = uidElem.innerText.split("#")[1];
+        for (let i = 0; i < taskArr.length; i++) {
+            let { id } = taskArr[i];
+            if (id == uid) {
+                taskArr.splice(i, 1);
+                let finalTaskArr = JSON.stringify(taskArr);
+                localStorage.setItem("allTask", finalTaskArr);
+                taskContainer.remove();
+                break;
+            }
+        }
+
     }
 
 }
