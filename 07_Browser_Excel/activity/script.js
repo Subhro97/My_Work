@@ -7,8 +7,8 @@ firstSheet.addEventListener("click", function () {
     sheetArr.forEach(function (sheet) {
         sheet.classList.remove("active-sheet");
     })
-    if (!sheet.classList[1]) {
-        sheet.classList.add("active-sheet");
+    if (!firstSheet.classList[1]) {
+        firstSheet.classList.add("active-sheet");
     }
 })
 
@@ -20,7 +20,7 @@ addBtnContainer.addEventListener("click", function () {
     let NewSheet = document.createElement("div");
     NewSheet.setAttribute("class", "sheet");
     NewSheet.setAttribute("sheetIdx", idx + 1);
-    NewSheet.innerText = `Sheet${idx + 1}`;
+    NewSheet.innerText = `Sheet ${idx + 1}`;
     sheetList.appendChild(NewSheet);
     NewSheet.addEventListener("click", function () {
         let sheetArr = document.querySelectorAll(".sheet");
@@ -41,7 +41,7 @@ for (let i = 0; i < 26; i++) {
 }
 topRow.innerHTML = str;
 let leftCol = document.querySelector(".left-col");
-str = ""
+str = "";
 for (let i = 0; i < 100; i++) {
     str += `<div class='left-col_box'>${i + 1}</div>`
 }
