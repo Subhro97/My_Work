@@ -1,6 +1,12 @@
 let addBtnContainer = document.querySelector(".add-sheet_container");
 let sheetList = document.querySelector(".sheets-list");
 let firstSheet = document.querySelector(".sheet");
+let Allcells = document.querySelectorAll(".grid .col");
+let addressBar = document.querySelector(".address-box");
+let leftBtn=document.querySelector(".left");
+let centerBtn=document.querySelector(".center");
+let rightBtn=document.querySelector(".right");
+let fontBtn=document.querySelector(".font-size");
 
 firstSheet.addEventListener("click", function () {
     let sheetArr = document.querySelectorAll(".sheet");
@@ -34,27 +40,54 @@ addBtnContainer.addEventListener("click", function () {
 
 })
 
-let topRow = document.querySelector(".top-row");
-let str = "";
-for (let i = 0; i < 26; i++) {
-    str += `<div class='col'>${String.fromCharCode(65 + i)}</div>`;
-}
-topRow.innerHTML = str;
-let leftCol = document.querySelector(".left-col");
-str = "";
-for (let i = 0; i < 100; i++) {
-    str += `<div class='left-col_box'>${i + 1}</div>`
-}
-leftCol.innerHTML = str;
+for (let i = 0; i < Allcells.length; i++) {
+    Allcells[i].addEventListener("click", function () {
+        let rid = Number(Allcells[i].getAttribute("rid"));
+        let cid = Number(Allcells[i].getAttribute("cid"));
+        let rowAdd = rid + 1;
+        let colAdd = String.fromCharCode(65 + cid);
+        let address = colAdd + rowAdd;
+        addressBar.value = address;
+    })
 
-// 2d array
-let grid = document.querySelector(".grid");
-str = "";
-for (let i = 0; i < 100; i++) {
-    str += `<div class="row">`
-    for (let j = 0; j < 26; j++) {
-        str += `<div class='col'>${String.fromCharCode(65 + j)}${i + 1}</div>`
-    }
-    str += "</div>";
 }
-grid.innerHTML = str;
+
+Allcells[0].click();
+
+function getRIDCDfromCell(address){
+    let colVal=address.charCodeAt(0);
+    let cid=colVal-65;
+    let rowVal=address.slice(1);
+    let rid=Number(rowVal)-1;
+    return {cid,rid};
+
+}
+leftBtn.addEventListener("click",function(){
+    let address=addressBar.value;
+    let {rid,cid}=getRIDCDfromCell(address);
+    let cell=document.querySelector(`.col[rid="${rid}"][cid="${cid}"]`);
+    cell.style.textAlign="left";
+
+})
+centerBtn.addEventListener("click",function(){
+    let address=addressBar.value;
+    let {rid,cid}=getRIDCDfromCell(address);
+    let cell=document.querySelector(`.col[rid="${rid}"][cid="${cid}"]`);
+    cell.style.textAlign="center";
+
+})
+rightBtn.addEventListener("click",function(){
+    let address=addressBar.value;
+    let {rid,cid}=getRIDCDfromCell(address);
+    let cell=document.querySelector(`.col[rid="${rid}"][cid="${cid}"]`);
+    cell.style.textAlign="right";
+
+})
+
+fontBtn.addEventListener("change",function(){
+    let fontSize=fontBtn.value;
+    let address=addressBar.value;
+    let {rid,cid}=getRIDCDfromCell(address);
+    let cell=document.querySelector(`.col[rid="${rid}"][cid="${cid}"]`);
+    cell.style.fontSize=fontSize+"px";
+})
