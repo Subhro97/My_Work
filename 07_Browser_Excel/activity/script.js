@@ -7,6 +7,12 @@ let leftBtn=document.querySelector(".left");
 let centerBtn=document.querySelector(".center");
 let rightBtn=document.querySelector(".right");
 let fontBtn=document.querySelector(".font-size");
+let fontFamily = document.querySelector(".font-family");
+let boldElem = document.querySelector(".bold");
+let italicElem = document.querySelector(".italic");
+let underlineElem = document.querySelector(".underline");
+let allAlignBtns = document.querySelectorAll(".alignment-container>*");
+
 
 firstSheet.addEventListener("click", function () {
     let sheetArr = document.querySelectorAll(".sheet");
@@ -48,6 +54,38 @@ for (let i = 0; i < Allcells.length; i++) {
         let colAdd = String.fromCharCode(65 + cid);
         let address = colAdd + rowAdd;
         addressBar.value = address;
+        let cellObj=sheetDB[rid][cid];
+
+        if(cellObj.bold==true){
+            boldElem.classList.add("active-btn");
+        }else{
+            boldElem.classList.remove("active-btn");
+        }
+
+        if(cellObj.italic==true){
+            italicElem.classList.add("active-btn");
+        }else{
+            italicElem.classList.remove("active-btn");
+        }
+
+        
+        if(cellObj.underline==true){
+            underlineElem.classList.add("active-btn");
+        }else{
+            underlineElem.classList.remove("active-btn");
+        }
+
+        for(let i=0;i<allAlignBtns.length;i++){
+            allAlignBtns[i].classList.remove("active-btn");
+        }
+
+        if(cellObj.halign=="left"){
+            leftBtn.classList.add("active-btn");
+        }else if(cellObj.halign=="center"){
+            centerBtn.classList.add("active-btn");
+        }else if(cellObj.halign=="right"){
+            rightBtn.classList.add("active-btn");
+        }
     })
 
 }
@@ -67,6 +105,12 @@ leftBtn.addEventListener("click",function(){
     let {rid,cid}=getRIDCDfromCell(address);
     let cell=document.querySelector(`.col[rid="${rid}"][cid="${cid}"]`);
     cell.style.textAlign="left";
+    let cellObj=sheetDB[rid][cid];
+    for(let i=0;i<allAlignBtns.length;i++){
+        allAlignBtns[i].classList.remove("active-btn");
+    }
+    leftBtn.classList.add("active-btn");
+    cellObj.halign="left";
 
 })
 centerBtn.addEventListener("click",function(){
@@ -74,6 +118,12 @@ centerBtn.addEventListener("click",function(){
     let {rid,cid}=getRIDCDfromCell(address);
     let cell=document.querySelector(`.col[rid="${rid}"][cid="${cid}"]`);
     cell.style.textAlign="center";
+    let cellObj=sheetDB[rid][cid];
+    for(let i=0;i<allAlignBtns.length;i++){
+        allAlignBtns[i].classList.remove("active-btn");
+    }
+    centerBtn.classList.add("active-btn");
+    cellObj.halign="center";
 
 })
 rightBtn.addEventListener("click",function(){
@@ -81,6 +131,12 @@ rightBtn.addEventListener("click",function(){
     let {rid,cid}=getRIDCDfromCell(address);
     let cell=document.querySelector(`.col[rid="${rid}"][cid="${cid}"]`);
     cell.style.textAlign="right";
+    let cellObj=sheetDB[rid][cid];
+    for(let i=0;i<allAlignBtns.length;i++){
+        allAlignBtns[i].classList.remove("active-btn");
+    }
+    rightBtn.classList.add("active-btn");
+    cellObj.halign="right";
 
 })
 
@@ -90,4 +146,75 @@ fontBtn.addEventListener("change",function(){
     let {rid,cid}=getRIDCDfromCell(address);
     let cell=document.querySelector(`.col[rid="${rid}"][cid="${cid}"]`);
     cell.style.fontSize=fontSize+"px";
+    
 })
+fontFamily.addEventListener("change", function () {
+    // alert(fontFamily.value);
+    let address = addressBar.value;
+    let { rid, cid } = getRIDCDfromCell(address);
+    let cell = document.querySelector(`.col[rid="${rid}"][cid="${cid}"]`);
+    let cellObj=sheetDB[rid][cid];
+    let cFont = fontFamily.value
+    cell.style.fontFamily = cFont;
+    cellObj.fontFamily=cFont;
+})
+
+boldElem.addEventListener("click", function () {
+    let isActive = boldElem.classList.contains("active-btn");
+    let address = addressBar.value;
+    let { rid, cid } = getRIDCDfromCell(address);
+    let cell = document.querySelector(`.col[rid="${rid}"][cid="${cid}"]`);
+    let cellObj=sheetDB[rid][cid];
+    if (isActive == false) {
+        // cell text bold
+        cell.style.fontWeight = "bold";
+        boldElem.classList.add("active-btn");
+        cellObj.bold=true;
+    } else {
+        // cell text normal
+        cell.style.fontWeight = "normal";
+        boldElem.classList.remove("active-btn");
+        cellObj.bold=false;
+    }
+
+    
+    
+
+})
+italicElem.addEventListener("click", function () {
+    let isActive = italicElem.classList.contains("active-btn");
+    let address = addressBar.value;
+    let { rid, cid } = getRIDCDfromCell(address);
+    let cell = document.querySelector(`.col[rid="${rid}"][cid="${cid}"]`);
+    let cellObj=sheetDB[rid][cid];
+    if (isActive == false) {
+        // cell text bold
+        cell.style.fontStyle = "italic";
+        italicElem.classList.add("active-btn");
+        cellObj.italic=true;
+    } else {
+        // cell text normal
+        cell.style.fontStyle = "normal";
+        italicElem.classList.remove("active-btn");
+        cellObj.italic=false;
+    }
+})
+underlineElem.addEventListener("click", function () {
+    let isActive = underlineElem.classList.contains("active-btn");
+    let address = addressBar.value;
+    let { rid, cid } = getRIDCDfromCell(address);
+    let cell = document.querySelector(`.col[rid="${rid}"][cid="${cid}"]`);
+    let cellObj=sheetDB[rid][cid];
+    if (isActive == false) {
+        // cell text bold
+        cell.style.textDecoration = "underline";
+        underlineElem.classList.add("active-btn");
+        cellObj.underline=true;
+    } else {
+        // cell text normal
+        cell.style.textDecoration = "none";
+        underlineElem.classList.remove("active-btn");
+        cellObj.underline=false;
+    }
+})
+// ****************************************************************
