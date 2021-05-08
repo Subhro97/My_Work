@@ -23,22 +23,25 @@ for (let i = 0; i < 100; i++) {
 }
 grid.innerHTML = str;
 
-
-let sheetDB=[];
-
-for(let i=0;i<100;i++){
-    let row=[];
-    for(let j=0;j<26;j++){
-        let obj={
-            bold:false,
-            italic:false,
-            underline:false,
-            halign:"left",
-            fontSize:"10",
-            fontFamily:"Arial"
+let workSheetDB=[];
+function initCurrentSheetDb() {
+    let sheetDB = [];
+    for (let i = 0; i < 100; i++) {
+        let row = [];
+        for (let j = 0; j < 26; j++) {
+            let obj = {
+                bold: false,
+                italic: false,
+                underline: false,
+                halign: "left",
+                fontSize: "10",
+                fontFamily: "Arial",
+                value:""
+            }
+            row.push(obj);
         }
-        row.push(obj);
+        sheetDB.push(row);
     }
-    sheetDB.push(row);
+    workSheetDB.push(sheetDB);
 }
-console.log(sheetDB);
+initCurrentSheetDb();
