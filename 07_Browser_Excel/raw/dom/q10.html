@@ -1,32 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <style>
-      #pass {
-        display: block;
-        margin: auto;
-        margin-top: 10rem;
-        width: 25rem;
-        height: 3rem;
-      }
-      p {
-        text-align: center;
-        font-size: 3rem;
-        display: none;
-      }
+        #pass {
+            display: block;
+            margin: auto;
+            margin-top: 10rem;
+            width: 25rem;
+            height: 3rem;
+        }
+
+        p {
+            text-align: center;
+            font-size: 3rem;
+            display: none;
+        }
     </style>
-  </head>
-  <body>
+</head>
+
+<body>
     <input type="text" id="pass" />
     <p>Caps on!</p>
     <script>
-      //Q- Write a script which keeps checking the password being entered. It should check if capslock is on or off if its on it should not allow to type and show "caps on" on screen, also it should only allow to type if the shift in pressed down.
-      
-    
+        //Q- Write a script which keeps checking the password being entered. It should check if capslock is on or off if its on it should not allow to type and show "caps on" on screen, also it should only allow to type if the shift in pressed down.
+        let input = document.querySelector("#pass");
+        let p = document.createElement("div");
+        let count=0;
+        input.addEventListener("keydown", function (e) {
+            if (e.getModifierState("CapsLock")) {
+                input.readOnly = "true";
+                count++;
+                if (count==1) {
+                    p.innerHTML = document.querySelector("p").innerText;
+                    p.style.textAlign = "center";
+                    document.body.appendChild(p);
+                }
+            } else if (!e.getModifierState("Shift")) {
+                input.readOnly = true;
+            }else {
+                input.readOnly = false;
+                p.remove();
+            }
+            count=0;
+        })
+
+
     </script>
-  </body>
+</body>
+
 </html>
