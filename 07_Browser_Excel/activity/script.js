@@ -28,13 +28,14 @@ addBtnContainer.addEventListener("click", function () {
     NewSheet.innerText = `Sheet ${idx + 1}`;
     sheetList.appendChild(NewSheet);
 
+    // creating new sheetDB and clearing the UI
     sheetArr.forEach(function (sheet) {
         sheet.classList.remove("active-sheet");
     })
     sheetArr = document.querySelectorAll(".sheet");
     sheetArr[sheetArr.length - 1].classList.add("active-sheet");
     initCurrentSheetDb();
-    sheetDB = workSheetDB[idx];
+    sheetDB = workSheetDB[idx]; //setting the sheetDB to the current sheet
     initUI();
 
 
@@ -51,9 +52,10 @@ function handleActiveSheet(e) {
     if (!MySheet.classList[1]) {
         MySheet.classList.add("active-sheet");
     }
+    //current sheetDB
     let sheetIdx = MySheet.getAttribute("sheetIdx")
     sheetDB = workSheetDB[sheetIdx - 1];
-    // get data from that and set ui
+    // setting the UI with values of the sheetDB
     setUI(sheetDB);
 
 }
@@ -231,6 +233,7 @@ underlineElem.addEventListener("click", function () {
     }
 })
 // ****************************************************************
+//clearing the UI
 function initUI() {
     for (let i = 0; i < Allcells.length; i++) {
         Allcells[i].style.fontWeight = "normal";
@@ -243,6 +246,7 @@ function initUI() {
     }
 }
 
+//adding another eventlistner to the cells for storing data in the sheetDB
 for(let i = 0; i < Allcells.length; i++) {
     Allcells[i].addEventListener("blur", function handleCell() {
         let address = addressBar.value;
@@ -252,6 +256,7 @@ for(let i = 0; i < Allcells.length; i++) {
         cellObject.value = cell.innerText;
     });
 }
+//setting the UI with the sheetDB 
 function setUI(sheetDB){
     for(let i=0;i<sheetDB.length;i++){
         for(let j=0;j<sheetDB[i].length;j++){
