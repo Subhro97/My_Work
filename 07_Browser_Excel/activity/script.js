@@ -12,6 +12,7 @@ let boldElem = document.querySelector(".bold");
 let italicElem = document.querySelector(".italic");
 let underlineElem = document.querySelector(".underline");
 let allAlignBtns = document.querySelectorAll(".alignment-container>*");
+let formulaInput = document.querySelector(".formula-box");
 let sheetDB = workSheetDB[0];
 
 
@@ -247,7 +248,7 @@ function initUI() {
 }
 
 //adding another eventlistner to the cells for storing data in the sheetDB
-for(let i = 0; i < Allcells.length; i++) {
+for (let i = 0; i < Allcells.length; i++) {
     Allcells[i].addEventListener("blur", function handleCell() {
         let address = addressBar.value;
         let { rid, cid } = getRIDCDfromCell(address);
@@ -257,12 +258,45 @@ for(let i = 0; i < Allcells.length; i++) {
     });
 }
 //setting the UI with the sheetDB 
-function setUI(sheetDB){
-    for(let i=0;i<sheetDB.length;i++){
-        for(let j=0;j<sheetDB[i].length;j++){
+function setUI(sheetDB) {
+    for (let i = 0; i < sheetDB.length; i++) {
+        for (let j = 0; j < sheetDB[i].length; j++) {
             let cell = document.querySelector(`.col[rid="${i}"][cid="${j}"]`);
-            let {bold,italic,underline,value,fontFamily,fontSize}=sheetDB[i][j];
-            cell.innerText=value;
+            let { bold, italic, underline, value, fontFamily, fontSize } = sheetDB[i][j];
+            cell.innerText = value;
         }
     }
+}
+
+formulaInput.addEventListener("keydown", function (e) {
+    if (e.key == "Enter" && formulaInput.value !== "") {
+        let formula = formulaInput.value;
+        let value = evaluateFormula(formula);
+        let address = addressBar.value;
+        let { rid, cid } = getRIDCDfromCell(address);
+        setUIByFormula(value, rid, cid); // setiing the value obtained in the cell which we want
+
+    }
+})
+
+function evaluateFormula(formula) {
+    let formulaTokens = formula.split(" "); //Splitting the string on the basis of ""
+
+    for (let i = 0; i < formulaTokens.length; i++) {
+        let firstCharofToken = formulaTokens[i].charCodeAt(0); //If element in arr is cell then getting the ascii code of the first letter
+        if (firstCharofToken >= 65 && firstCharofToken <= 90) {
+            let { rid, cid } = getRIDCDfromCell(formulaTokens[i]);
+            let cellObject = sheetDB[rid][cid];
+            let {value}=cellObject;
+
+            formula=formula.replace(formulaTokens[i], value); //exchanging the cell address for values in the string
+        }
+    }
+    let ans=eval(formula); //using the node.js's eval() compiler to calculate the ans of the formula
+    return ans;
+}
+function setUIByFormula(value,rid,cid){
+    let cell = document.querySelector(`.col[rid="${rid}"][cid="${cid}"]`);
+    cell.innerText=value;
+
 }

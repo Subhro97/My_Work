@@ -1,3 +1,5 @@
+// let a=10;
+// script -> grid
 let topRow = document.querySelector(".top-row");
 let str = "";
 for (let i = 0; i < 26; i++) {
@@ -5,12 +7,11 @@ for (let i = 0; i < 26; i++) {
 }
 topRow.innerHTML = str;
 let leftCol = document.querySelector(".left-col");
-str = "";
+str = ""
 for (let i = 0; i < 100; i++) {
     str += `<div class='left-col_box'>${i + 1}</div>`
 }
 leftCol.innerHTML = str;
-
 // 2d array
 let grid = document.querySelector(".grid");
 str = "";
@@ -22,26 +23,34 @@ for (let i = 0; i < 100; i++) {
     str += "</div>";
 }
 grid.innerHTML = str;
-
-let workSheetDB=[];
+// initial load
+workSheetDB = [];
 function initCurrentSheetDb() {
     let sheetDB = [];
     for (let i = 0; i < 100; i++) {
         let row = [];
         for (let j = 0; j < 26; j++) {
-            let obj = {
+            let cell = {
                 bold: false,
-                italic: false,
-                underline: false,
-                halign: "left",
-                fontSize: "10",
+                italic: "normal",
+                underline: "none",
                 fontFamily: "Arial",
-                value:""
+                fontSize: "10",
+                halign: "left",
+                value: "",
+                children: [],
+                formula: ""
             }
-            row.push(obj);
+
+            row.push(cell);
         }
         sheetDB.push(row);
     }
+    console.log(sheetDB);
     workSheetDB.push(sheetDB);
+    console.log(workSheetDB);
 }
 initCurrentSheetDb();
+
+//  2 d Array-> styling prop
+//  cell set 
