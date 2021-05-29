@@ -3,6 +3,6 @@
 }
 body{
     margin:0px;
-    background-color: #CC00FF #F21515;
-    background-blend-mode: screen;
+    background: radial-gradient(#CC00FF,#F21515);
 }
+

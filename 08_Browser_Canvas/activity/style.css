@@ -17,13 +17,101 @@ video{
     width:100%;
     text-align: center;
 }
-#record-video {
-    position:fixed;
-    right:6rem;
-    top:45vh;
+#record-video
+{
+    position: fixed;
+    right: 6rem;
+    top: 36vh;
     border-radius: 50%;
-    border:none;
-    height:6rem;
-    width:6rem;
-  }
+    border: 8px solid white;
+    height: 6rem;
+    width: 6rem;
+    background-color: black;
+}
+  #click-picture{
+    position: fixed;
+    right: 6rem;
+    top: 50vh;
+    border-radius: 50%;
+    border: 8px solid white;
+    height: 6rem;
+    width: 6rem;
+    background-color: black;
+}
 
+#record-div,#click-div{
+    height:70%;
+    width:80%;
+    margin:auto;
+    border-radius:50%;
+}
+#record-div{
+    background-color: red;
+}
+#click-div{
+    background-color: white;
+}
+
+.filter-container{
+    border:1px solid white;
+    position:fixed;
+    top:12vh;
+    left:5.3vw;
+    display:flex;
+    flex-direction: column;
+    height: 60vh;
+    width:5.5vw;
+
+}
+.filter{
+    border:1px solid white;
+    height:20%;
+    background: url(https://images.unsplash.com/photo-1591526038358-0e3d334fb8c0?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=100);
+    background-blend-mode: color-burn;
+    background-size: cover;
+}
+.recording-animation{
+    animation: shrinkInOut 0.8s infinite;
+}
+.capture-animation{
+    animation: shrinkInOut 1s;
+}
+@keyframes shrinkInOut{
+    0%{
+        transform:scale(1);
+    }
+
+    50%{
+        transform: scale(1.2);
+    }
+
+    100%{
+        transform:scale(1);
+    }
+}
+
+#record-video,#click-picture,.filter-container{
+    z-index: 3;
+}
+.zoom{
+    height: 15vh;
+    width:4vw;
+    z-index:5;
+    position:fixed;
+    top:12vh;
+    right:6vh;
+    display:flex;
+    flex-direction:column;
+
+
+}
+
+.zoom button{
+    color:white;
+    background-color: #222;
+    border:none;
+    outline:none;
+    height:50%;
+    font-size:3.5rem;
+
+}
